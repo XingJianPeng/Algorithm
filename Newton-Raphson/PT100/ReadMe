@@ -1,0 +1,18 @@
+20230423
+
+1. 基本信息
+PT100 正温度系数热敏电阻. 它的主要成分是铂,化学符号pt,也就传说中的白金,它的温度特性好,稳定性好,耐酸碱性好,所以被用来制作成了温度传感器,并在工业中有大量的应用,当然它的价格不便宜.
+
+2. 根据电阻值计算温度值
+
+1)查表法
+https://blog.csdn.net/li707414287/article/details/102784242?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3-102784242-blog-108014792.235%5Ev31%5Epc_relevant_default_base3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3-102784242-blog-108014792.235%5Ev31%5Epc_relevant_default_base3&utm_relevant_index=6
+  二分法查表(5℃一组)确定具体分组,然后插值求温度值;
+  缺点: 分组太细,flash占用比较大;
+        分组太粗,精度较差;
+
+2)excel数据拟合出公式,然后利用公式计算;
+https://blog.csdn.net/m0_38106923/article/details/108014792
+
+3)牛顿迭代法求解温度值
+https://blog.csdn.net/ZCShouCSDN/article/details/84186719
