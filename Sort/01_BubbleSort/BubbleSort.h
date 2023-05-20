@@ -16,7 +16,8 @@
 #define  Ex_BubbleSort
 #endif
 
+#define  DataType int
 
-
+Ex_BubbleSort void bubble_sort(DataType* arr,unsigned int len);
 
 #endif
