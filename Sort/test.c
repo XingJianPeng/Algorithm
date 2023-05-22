@@ -9,14 +9,16 @@
 #define MAIN_C
 
 #include <stdio.h>
-#include "BubbleSort.h"
+#include "01_BubbleSort/BubbleSort.h"
+#include "02_SelectSort/SelectSort.h"
 
 int arr[5] = {1,3,2,7,6};
 int main(int argc, char **argv)
 {
   int i = 0;
 
-  bubble_sort(arr,5);
+  //bubble_sort(arr,5);
+  select_sort(arr,5);
   for(i = 0; i < 5; i++)
     printf("%d ",arr[i]);
   printf("\n");
