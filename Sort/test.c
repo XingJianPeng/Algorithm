@@ -11,15 +11,21 @@
 #include <stdio.h>
 #include "01_BubbleSort/BubbleSort.h"
 #include "02_SelectSort/SelectSort.h"
+#include "03_InsertSort/InsertSort.h"
+#include "04_QuickSort/QuickSort.h"
 
-int arr[5] = {1,3,2,7,6};
+int arr[] = {1,3,2,7,6,4,9,0,-1,45,21,16,4,8};
 int main(int argc, char **argv)
 {
   int i = 0;
+  int len = sizeof(arr)/sizeof(arr[0]);
 
   //bubble_sort(arr,5);
-  select_sort(arr,5);
-  for(i = 0; i < 5; i++)
+  //select_sort(arr,5);
+  //insert_sort(arr,5);
+  printf("len = %d\n",len);
+  quick_sort(arr,len);
+  for(i = 0; i < len; i++)
     printf("%d ",arr[i]);
   printf("\n");
   return 0;
