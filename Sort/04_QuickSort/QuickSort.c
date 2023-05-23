@@ -14,9 +14,7 @@
 void quick_sort(DataType* arr,unsigned int len)
 {
   int i,j;
-  int m;
   DataType base = arr[0];
-  DataType temp;
 
   if(len < 2)
     return;
@@ -24,6 +22,17 @@ void quick_sort(DataType* arr,unsigned int len)
   i = 0;
   j = len-1;
 
+  while(i < j)
+  {
+    while((i < j) && (arr[j] >= base)) j--;
+    if(i < j) arr[i++] = arr[j];
+    while((i < j) && (arr[i] <= base)) i++;
+    if(i < j) arr[j--] = arr[i];
+  }
+  
+  arr[i] = base;
+
+  /*
   while(i < j)
   {
     if(arr[j] < base)
@@ -35,7 +44,6 @@ void quick_sort(DataType* arr,unsigned int len)
           temp = arr[i];
           arr[i] = arr[j];
           arr[j] = temp; 
-
           break;
         }
         i++;
@@ -43,12 +51,11 @@ void quick_sort(DataType* arr,unsigned int len)
     }
     j--;
   }
-  
   m = i;
   arr[0] = arr[m];
   arr[m] = base;
-
+  */
   //deal with left and right
-  quick_sort(&arr[0],m);
-  quick_sort(&arr[m+1],len-m-1);
+  quick_sort(&arr[0],i);
+  quick_sort(&arr[i+1],len-i-1);
 }
