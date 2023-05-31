@@ -32,29 +32,6 @@ void quick_sort(DataType* arr,unsigned int len)
   
   arr[i] = base;
 
-  /*
-  while(i < j)
-  {
-    if(arr[j] < base)
-    {//find a left element
-      while(i < j) 
-      {
-        if(arr[i] > base)
-        {
-          temp = arr[i];
-          arr[i] = arr[j];
-          arr[j] = temp; 
-          break;
-        }
-        i++;
-      }
-    }
-    j--;
-  }
-  m = i;
-  arr[0] = arr[m];
-  arr[m] = base;
-  */
   //deal with left and right
   quick_sort(&arr[0],i);
   quick_sort(&arr[i+1],len-i-1);
