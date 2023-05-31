@@ -20,8 +20,6 @@ int main(int argc, char **argv)
   int i = 0;
   int len = sizeof(arr)/sizeof(arr[0]);
 
-  for(i = 0; i < len; i++)
-    printf("%d ",arr[i]);
   //bubble_sort(arr,5);
   //select_sort(arr,5);
   //insert_sort(arr,5);

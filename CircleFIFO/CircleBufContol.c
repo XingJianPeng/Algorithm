@@ -11,14 +11,15 @@
 
 #include "CircleBufContol.h"
 
-uint8_t IsNull_CBuf(tCircleBufCtrl *pCBufCtrl)//ÅÐ¶Ï»º´æÇøÊÇ·ñÎª¿Õ
+unsigned char IsNull_CBuf(tCircleBufCtrl *pCBufCtrl)//ÅÐ¶Ï»º´æÇøÊÇ·ñÎª¿Õ
 {
 	if((pCBufCtrl->Out)==(pCBufCtrl->In))
 		return 1;
 	else
 		return 0;
 }
-uint8_t IsFull_CBuf(tCircleBufCtrl *pCBufCtrl)//ÅÐ¶Ï»º´æÇøÊÇ·ñÂú
+
+unsigned char IsFull_CBuf(tCircleBufCtrl *pCBufCtrl)//ÅÐ¶Ï»º´æÇøÊÇ·ñÂú
 {
 	if(((pCBufCtrl->Out)==0)&&((pCBufCtrl->In)==(pCBufCtrl->MaxItemNum -1)))
 		return 1;
@@ -27,9 +28,10 @@ uint8_t IsFull_CBuf(tCircleBufCtrl *pCBufCtrl)//ÅÐ¶Ï»º´æÇøÊÇ·ñÂú
 	else 
 		return 0;
 }
-uint32_t GetInPosi_CBuf(tCircleBufCtrl *pCBufCtrl)
+
+unsigned int GetInPosi_CBuf(tCircleBufCtrl *pCBufCtrl)
 {
-	uint32_t i;
+	unsigned int i;
 	i=pCBufCtrl->In;
 	pCBufCtrl->In++;
 	if((pCBufCtrl->In)>=pCBufCtrl->MaxItemNum)
@@ -37,14 +39,33 @@ uint32_t GetInPosi_CBuf(tCircleBufCtrl *pCBufCtrl)
 	return i;
 }
 
-uint32_t GetInPosi_CBuf_RdOnly(tCircleBufCtrl *pCBufCtrl)
+unsigned int GetInPosi_CBuf_RdOnly(tCircleBufCtrl *pCBufCtrl)
 {
 	return pCBufCtrl->In;
 }
 
-uint32_t GetOutPosi_CBuf(tCircleBufCtrl *pCBufCtrl)
+unsigned int GetInPosi_Front_CBuf(tCircleBufCtrl *pCBufCtrl)
 {
-	uint32_t i;
+    if(pCBufCtrl->Out == 0)
+      pCBufCtrl->Out = pCBufCtrl->MaxItemNum;
+    pCBufCtrl->Out--;
+
+    return pCBufCtrl->Out;
+}
+
+unsigned int GetInPosi_Front_CBuf_RdOnly(tCircleBufCtrl *pCBufCtrl)
+{
+    unsigned int i = pCBufCtrl->Out;
+    if(i == 0)
+      i = pCBufCtrl->MaxItemNum;
+    i--;
+
+    return i;
+}
+
+unsigned int GetOutPosi_CBuf(tCircleBufCtrl *pCBufCtrl)
+{
+	unsigned int i;
 	i=pCBufCtrl->Out;
 
 	if((pCBufCtrl->Out)!=(pCBufCtrl->In))
@@ -56,21 +77,49 @@ uint32_t GetOutPosi_CBuf(tCircleBufCtrl *pCBufCtrl)
 	return i;
 }
 
-uint32_t GetOutPosi_CBuf_RdOnly(tCircleBufCtrl *pCBufCtrl)
+unsigned int GetOutPosi_CBuf_RdOnly(tCircleBufCtrl *pCBufCtrl)
 {
 	return pCBufCtrl->Out;
 }
 
-void ResetCircle_CBuf(tCircleBufCtrl *pCBufCtrl, uint32 cMaxNumItem)
+unsigned int GetOutPosi_Front_CBuf(tCircleBufCtrl *pCBufCtrl)
+{
+    unsigned int i = 0;
+    if((pCBufCtrl->Out) != (pCBufCtrl->In))
+    {
+        if(pCBufCtrl->In == 0)
+           pCBufCtrl->In = pCBufCtrl->MaxItemNum; 
+        pCBufCtrl->In --;
+        i = pCBufCtrl->In;
+    }
+
+    return i;
+}
+
+unsigned int GetOutPosi_Front_CBuf_RdOnly(tCircleBufCtrl *pCBufCtrl)
+{
+    unsigned int i = 0;
+    if((pCBufCtrl->Out) != (pCBufCtrl->In))
+    {
+        i = pCBufCtrl->In;
+        if(i == 0)
+           i = pCBufCtrl->MaxItemNum; 
+        i --;
+    }
+
+    return i;
+}
+
+void ResetCircle_CBuf(tCircleBufCtrl *pCBufCtrl, unsigned int MaxNumItem)
 {
 	pCBufCtrl->In = 0;
 	pCBufCtrl->Out = 0;
-	pCBufCtrl->MaxItemNum = cMaxNumItem;
+	pCBufCtrl->MaxItemNum = MaxNumItem;
 }
 
-uint32_t GetItem_CBuf(tCircleBufCtrl *pCBufCtrl,u32 Num,u32 *CurGetOut)
+unsigned int GetItem_CBuf(tCircleBufCtrl *pCBufCtrl,unsigned int Num,unsigned int *CurGetOut)
 {
-	u32 Item=0;
+	unsigned int Item=0;
 	*CurGetOut=pCBufCtrl->Out;
 	if (pCBufCtrl->In > pCBufCtrl->Out) {
 		Item = pCBufCtrl->In - pCBufCtrl->Out; //×î¶àÈ¡¶àÉÙ
@@ -94,26 +143,27 @@ uint32_t GetItem_CBuf(tCircleBufCtrl *pCBufCtrl,u32 Num,u32 *CurGetOut)
 		}
 	}
 }
-u16 GetUseRate_CBuf(tCircleBufCtrl *pCBufCtrl,u16 Basic)
+
+unsigned short GetUseRate_CBuf(tCircleBufCtrl *pCBufCtrl,unsigned short Basic)
 {
-	u16 i=0;
+	unsigned short i=0;
 
 	if(pCBufCtrl->In>=pCBufCtrl->Out){
-		i=((pCBufCtrl->In-pCBufCtrl->Out)*Basic)/pCBufCtrl->MaxItemNum;
+		i=((pCBufCtrl->In - pCBufCtrl->Out)*Basic)/pCBufCtrl->MaxItemNum;
 	}else{
-		i=((pCBufCtrl->MaxItemNum-pCBufCtrl->Out+pCBufCtrl->In)*Basic)/pCBufCtrl->MaxItemNum;
+		i=((pCBufCtrl->MaxItemNum - pCBufCtrl->Out + pCBufCtrl->In)*Basic)/pCBufCtrl->MaxItemNum;
 	}
 
 	return i;
 
 }
 
-u16 GetItemNum_CBuf(tCircleBufCtrl *pCBufCtrl)
+unsigned short GetItemNum_CBuf(tCircleBufCtrl *pCBufCtrl)
 {
-	u16 i = 0;
+	unsigned short i = 0;
 	if(pCBufCtrl->In >= pCBufCtrl->Out)
 	{
-		i=(pCBufCtrl->In-pCBufCtrl->Out);
+		i=(pCBufCtrl->In - pCBufCtrl->Out);
 	}
 	else
 	{
