@@ -18,6 +18,7 @@
 
 //#include  "Bsp.h"
 
+#define CircleVer (1)   //0:老版本实现; 1:新版本实现
 
 #ifdef  CircleBufContol_C
 #define EX_CircleBufContol
@@ -28,6 +29,9 @@
 typedef  struct _tCircleBufCtrl{
 	unsigned int In;
 	unsigned int Out;
+#if(CircleVer)
+	unsigned int Entries;   //当前条数
+#endif
 	unsigned int MaxItemNum;
 }tCircleBufCtrl;
 
